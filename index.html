@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世田谷ピックルボール連盟 — Setagaya Pickleball Federation</title>
+  <meta name="description" content="世田谷を拠点とする、次世代型アーバンスポーツコミュニティ。A next-generation urban sports culture born in Setagaya, Tokyo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM — Setagaya Pickleball Federation
+       Version: 2.0  |  2026-05-07
+    ============================================================ */
+    :root {
+      --c-primary:    #111111;
+      --c-bg:         #FFFFFF;
+      --c-accent:     #D9FF3F;
+      --c-blue:       #3B82F6;
+      --c-muted:      #888888;
+      --c-subtle:     #F2F2F0;
+      --c-dark:       #0A0A0A;
+      --c-border:     #E5E5E5;
+
+      --f-jp: 'Noto Sans JP', sans-serif;
+      --f-en: 'Inter', 'Helvetica Neue', sans-serif;
+
+      --max-w: 1280px;
+      --pad-x: clamp(20px, 5vw, 72px);
+      --section-y: clamp(80px, 10vw, 140px);
+      --nav-h: 96px;
+
+      --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1.0);
+      --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-primary);
+      font-family: var(--f-jp);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad-x);
+      z-index: 200;
+      transition: background 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+    }
+
+    .nav.--scrolled {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Logo images — two versions, swapped by scroll state */
+    .nav__logo-img {
+      height: 96px;
+      width: auto;
+      display: block;
+      position: absolute;
+      transition: opacity 0.4s var(--ease-out);
+    }
+
+    .nav__logo { position: relative; width: 192px; height: 96px; }
+
+    /* Dark version: visible on hero, hidden when scrolled */
+    .nav__logo-dark  { opacity: 1; }
+    .nav__logo-light { opacity: 0; }
+
+    .nav.--scrolled .nav__logo-dark  { opacity: 0; }
+    .nav.--scrolled .nav__logo-light { opacity: 1; }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-family: var(--f-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+
+    .nav.--scrolled .nav__links a { color: rgba(0,0,0,0.45); }
+
+    .nav__links a:hover { color: white; }
+    .nav.--scrolled .nav__links a:hover { color: var(--c-primary); }
+
+    .nav__lang {
+      display: flex;
+      background: rgba(255,255,255,0.12);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .nav.--scrolled .nav__lang { background: var(--c-subtle); }
+
+    .lang-btn {
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: rgba(255,255,255,0.5);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .nav.--scrolled .lang-btn { color: rgba(0,0,0,0.4); }
+
+    .lang-btn.--active {
+      background: white;
+      color: var(--c-primary);
+    }
+
+    .nav.--scrolled .lang-btn.--active {
+      background: var(--c-primary);
+      color: white;
+    }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 20px;
+      background: var(--c-accent);
+      color: var(--c-primary) !important;
+      border-radius: 100px;
+      font-family: var(--f-jp);
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+      text-transform: none !important;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .nav__cta:hover {
+      background: #c5f020 !important;
+      color: var(--c-primary) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav__hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: rgba(255,255,255,0.8);
+      transition: background 0.3s;
+    }
+
+    .nav.--scrolled .nav__hamburger span { background: var(--c-primary); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 var(--pad-x) clamp(60px, 8vw, 100px);
+      overflow: hidden;
+      background: var(--c-dark);
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.55) 100%),
+        #0C0C0C;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero__bg.--photo {
+      background-image:
+        linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.55) 100%),
+        url('hero/action_pickleball_d58c1ea4.png');
+      background-size: cover, cover;
+      background-position: center, center;
+    }
+
+    /* Faint court lines */
+    .hero__court {
+      position: absolute;
+      right: -60px;
+      bottom: -60px;
+      width: 55vw;
+      max-width: 700px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    /* Grain texture */
+    .hero__grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-w);
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.7s 0.3s var(--ease-out) forwards;
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--c-accent);
+    }
+
+    .hero__headline {
+      font-family: var(--f-jp);
+      font-size: clamp(40px, 6.5vw, 88px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.5s var(--ease-out) forwards;
+    }
+
+    .hero__sub {
+      font-family: var(--f-en);
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.38);
+      margin-bottom: clamp(36px, 5vw, 52px);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.7s 0.65s var(--ease-out) forwards;
+    }
+
+    .hero__ctas {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.7s 0.8s var(--ease-out) forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--c-accent);
+      color: var(--c-primary);
+      border-radius: 100px;
+      font-family: var(--f-jp);
+      font-size: 14px;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.15s var(--ease-out), box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #c5f020;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(217, 255, 63, 0.3);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 100px;
+      font-family: var(--f-en);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 36px;
+      right: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s var(--ease-out) forwards;
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
+    }
+
+    .hero__scroll-label {
+      font-family: var(--f-en);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      writing-mode: vertical-rl;
+    }
+
+    /* ============================================================
+       STATS BAR
+    ============================================================ */
+    .stats {
+      background: var(--c-primary);
+      padding: clamp(28px, 4vw, 44px) var(--pad-x);
+    }
+
+    .stats__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .stat {
+      background: var(--c-primary);
+      padding: clamp(20px, 2.5vw, 32px) clamp(16px, 2vw, 28px);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat__num {
+      font-family: var(--f-en);
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--c-accent);
+    }
+
+    .stat__label {
+      font-family: var(--f-jp);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .stat__label-en {
+      font-family: var(--f-en);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+      margin-top: 2px;
+      display: none; /* hidden by default (JP mode) */
+    }
+
+    /* ---- LANGUAGE SWITCHING ---- */
+    .lang-en { display: none; }
+
+    html[lang="en"] .lang-jp        { display: none !important; }
+    html[lang="en"] .lang-en        { display: inline !important; }
+    html[lang="en"] .stat__label    { display: none; }
+    html[lang="en"] .stat__label-en { display: block; }
+
+    /* ============================================================
+       SECTION: WHAT IS PICKLEBALL
+    ============================================================ */
+    .section {
+      padding: var(--section-y) var(--pad-x);
+    }
+
+    .section__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      margin-bottom: 28px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--c-muted);
+    }
+
+    .display-text {
+      font-family: var(--f-en);
+      font-size: clamp(52px, 8.5vw, 112px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      color: var(--c-primary);
+      margin-bottom: clamp(48px, 6vw, 80px);
+    }
+
+    .display-text__accent { color: var(--c-accent); }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--c-border);
+    }
+
+    .feature {
+      background: var(--c-bg);
+      padding: clamp(24px, 3vw, 40px) clamp(20px, 2.5vw, 32px);
+      transition: background 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature:hover { background: #FAFAF8; }
+
+    .feature__icon {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+    }
+
+    .feature__en {
+      font-family: var(--f-en);
+      font-size: clamp(17px, 1.8vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .feature__jp {
+      font-family: var(--f-jp);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--c-muted);
+      margin-bottom: 20px;
+    }
+
+    .feature__desc {
+      font-family: var(--f-jp);
+      font-size: 13px;
+      line-height: 1.75;
+      color: #666;
+      font-weight: 400;
+      margin-top: auto;
+    }
+
+    /* ============================================================
+       SECTION: COMMUNITY
+    ============================================================ */
+    .community {
+      padding: var(--section-y) 0;
+      overflow: hidden;
+    }
+
+    .community__head {
+      padding: 0 var(--pad-x);
+      margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .community__headline {
+      font-family: var(--f-en);
+      font-size: clamp(36px, 5.5vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .community__headline .dim { color: rgba(0,0,0,0.2); }
+
+    .community__sub {
+      font-family: var(--f-jp);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--c-muted);
+    }
+
+    .gallery {
+      display: flex;
+      gap: 14px;
+      padding: 4px var(--pad-x) 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .gallery::-webkit-scrollbar { display: none; }
+    .gallery.--grabbing { cursor: grabbing; }
+
+    .gallery__item {
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery__item:nth-child(odd)  { width: clamp(200px, 22vw, 280px); height: clamp(260px, 30vw, 360px); }
+    .gallery__item:nth-child(even) { width: clamp(160px, 17vw, 220px); height: clamp(200px, 24vw, 290px); margin-top: 36px; }
+
+    .gallery__placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      font-family: var(--f-en);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .gallery__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s var(--ease-out);
+    }
+
+    .gallery__item:hover .gallery__photo {
+      transform: scale(1.04);
+    }
+
+    .gallery__item:nth-child(6n+1) .gallery__placeholder { background: linear-gradient(160deg, #141414 0%, #1e3a2f 100%); }
+    .gallery__item:nth-child(6n+2) .gallery__placeholder { background: linear-gradient(160deg, #1a1020 0%, #2e1065 100%); }
+    .gallery__item:nth-child(6n+3) .gallery__placeholder { background: linear-gradient(160deg, #0f1923 0%, #1c3d5a 100%); }
+    .gallery__item:nth-child(6n+4) .gallery__placeholder { background: linear-gradient(160deg, #1a1a14 0%, #3d3a1c 100%); }
+    .gallery__item:nth-child(6n+5) .gallery__placeholder { background: linear-gradient(160deg, #0f1f1a 0%, #1a3a30 100%); }
+    .gallery__item:nth-child(6n+6) .gallery__placeholder { background: linear-gradient(160deg, #1a0f14 0%, #3a1c28 100%); }
+
+    /* ============================================================
+       SECTION: EVENTS
+    ============================================================ */
+    .events {
+      padding: var(--section-y) var(--pad-x);
+      background: var(--c-primary);
+    }
+
+    .events__inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .events__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .events__title {
+      font-family: var(--f-en);
+      font-size: clamp(36px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: white;
+      line-height: 1;
+    }
+
+    .events__title-sub {
+      font-family: var(--f-jp);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .events__all {
+      font-family: var(--f-en);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--c-accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      padding-bottom: 8px;
+    }
+
+    .events__all:hover { opacity: 0.6; }
+
+    .event-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .event-row {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      align-items: center;
+      gap: 28px;
+      padding: 22px 24px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .event-row:hover { background: rgba(255,255,255,0.075); }
+
+    .event-row__date { text-align: left; }
+
+    .event-row__day {
+      font-family: var(--f-en);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: white;
+      line-height: 1;
+    }
+
+    .event-row__month {
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+    }
+
+    .event-row__body { display: flex; flex-direction: column; gap: 6px; }
+
+    .event-row__name {
+      font-family: var(--f-jp);
+      font-size: clamp(15px, 1.6vw, 19px);
+      font-weight: 700;
+      color: white;
+    }
+
+    .event-row__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    .badge--green  { background: rgba(217,255,63,0.12);  color: var(--c-accent); }
+    .badge--blue   { background: rgba(59,130,246,0.15);  color: #60A5FA; }
+    .badge--white  { background: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.5); }
+
+    .event-row__location {
+      font-family: var(--f-jp);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .event-row__cta {
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--c-accent);
+      padding: 9px 18px;
+      border: 1px solid rgba(217,255,63,0.25);
+      border-radius: 100px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .event-row__cta:hover {
+      background: var(--c-accent);
+      color: var(--c-primary);
+      border-color: var(--c-accent);
+    }
+
+    /* ============================================================
+       SECTION: PHILOSOPHY
+    ============================================================ */
+    .philosophy {
+      padding: var(--section-y) var(--pad-x);
+      background: var(--c-subtle);
+    }
+
+    .philosophy__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 7vw, 100px);
+      align-items: start;
+    }
+
+    .philosophy__headline {
+      font-family: var(--f-en);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+    }
+
+    .philosophy__headline em {
+      font-style: normal;
+      color: var(--c-blue);
+    }
+
+    .philosophy__right { padding-top: 8px; }
+
+    .philosophy__body {
+      font-family: var(--f-jp);
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 2;
+      color: #555;
+      font-weight: 400;
+      margin-bottom: 36px;
+    }
+
+    .philosophy__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border: 1px solid var(--c-border);
+      border-radius: 100px;
+      color: var(--c-muted);
+    }
+
+    /* ============================================================
+       SECTION: BEGINNERS
+    ============================================================ */
+    .beginners { padding: var(--section-y) var(--pad-x); }
+
+    .beginners__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 7vw, 100px);
+      align-items: center;
+    }
+
+    .beginners__headline {
+      font-family: var(--f-jp);
+      font-size: clamp(32px, 4.5vw, 60px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .beginners__body {
+      font-family: var(--f-jp);
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 1.9;
+      color: #555;
+      margin-bottom: 36px;
+    }
+
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--c-primary);
+      color: white;
+      border-radius: 100px;
+      font-family: var(--f-jp);
+      font-size: 14px;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-dark:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    .beginners__visual {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--c-primary);
+    }
+
+    .beginners__visual-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 40%, rgba(217,255,63,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 75% 70%, rgba(59,130,246,0.08) 0%, transparent 55%),
+        #0C0C0C;
+    }
+
+    .beginners__visual-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .beginners__big-text {
+      font-family: var(--f-en);
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: white;
+    }
+
+    .beginners__big-text .a { color: var(--c-accent); }
+
+    .beginners__visual-sub {
+      font-family: var(--f-jp);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       SECTION: PARTNERS
+    ============================================================ */
+    .partners {
+      padding: clamp(60px, 7vw, 88px) var(--pad-x);
+      border-top: 1px solid var(--c-border);
+    }
+
+    .partners__label {
+      text-align: center;
+      font-family: var(--f-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.25);
+      margin-bottom: 40px;
+    }
+
+    .partners__row {
+      max-width: 840px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 36px 48px;
+    }
+
+    .partner {
+      font-family: var(--f-en);
+      font-size: clamp(13px, 1.4vw, 16px);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #C8C8C8;
+      cursor: default;
+      transition: color 0.2s;
+    }
+
+    .partner:hover { color: #999; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--c-primary);
+      padding: clamp(52px, 7vw, 72px) var(--pad-x) 28px;
+    }
+
+    .footer__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* Brand */
+    .footer__brand { display: flex; flex-direction: column; gap: 6px; }
+
+    .footer__name {
+      font-family: var(--f-jp);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.01em;
+    }
+
+    .footer__jp {
+      font-family: var(--f-en);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.04em;
+    }
+
+    /* Middle row: Follow + Contact */
+    .footer__middle {
+      display: flex;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer__follow-label,
+    .footer__contact-label {
+      font-family: var(--f-jp);
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Social links */
+    .footer__socials {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer__socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--f-en);
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      padding: 9px 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .footer__socials a:hover {
+      color: white;
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Contact email */
+    .footer__contact-email {
+      font-family: var(--f-en);
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+
+    .footer__contact-email:hover { color: white; }
+
+    /* Bottom bar */
+    .footer__bottom {
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .footer__copy {
+      font-family: var(--f-en);
+      font-size: 11px;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       REVEAL ANIMATIONS
+    ============================================================ */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 0.8; transform: scaleY(1.2); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+    }
+
+    .reveal.--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+    .d4 { transition-delay: 0.32s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .hero__eyebrow,
+      .hero__headline,
+      .hero__sub,
+      .hero__ctas,
+      .hero__scroll { opacity: 1; transform: none; animation: none; transition: none; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1023px) {
+      .features              { grid-template-columns: repeat(2, 1fr); }
+      .philosophy__inner     { grid-template-columns: 1fr; gap: 32px; }
+      .beginners__inner      { grid-template-columns: 1fr; }
+      .beginners__visual     { max-width: 400px; aspect-ratio: 4/3; }
+      .stats__inner          { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 767px) {
+      .nav__links            { display: none; }
+      .nav__hamburger        { display: flex; }
+      .features              { grid-template-columns: 1fr; }
+      .events__head          { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .event-row             { grid-template-columns: 72px 1fr; }
+      .event-row__cta        { display: none; }
+      .footer__middle        { flex-direction: column; gap: 28px; }
+      .footer__socials       { flex-wrap: wrap; }
+      .community__headline   { font-size: clamp(28px, 7vw, 48px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="nav" id="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="世田谷ピックルボール連盟 ホームへ">
+      <img src="spf_logo.png/SPF_Instagram_Icon.PNG" class="nav__logo-img nav__logo-dark"  alt="SPF — Setagaya Pickleball Federation">
+      <img src="spf_logo.png/SPF%20logo%20black.PNG" class="nav__logo-img nav__logo-light" alt="SPF — Setagaya Pickleball Federation">
+    </a>
+
+    <nav aria-label="メインナビゲーション">
+      <ul class="nav__links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#beginners">Play</a></li>
+        <li>
+          <div class="nav__lang" role="group" aria-label="言語切替">
+            <button class="lang-btn --active" id="btn-jp" onclick="setLang('jp')" aria-pressed="true">JP</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
+          </div>
+        </li>
+        <li><a href="https://line.me/ti/g2/es1k-yhZGqpwgxVV_8784oTb1PSluKL_r3O2UA" target="_blank" rel="noopener" class="nav__cta" data-jp="今すぐ参加" data-en="Join Now">今すぐ参加</a></li>
+      </ul>
+    </nav>
+
+    <button class="nav__hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" aria-label="メインビジュアル">
+    <div class="hero__bg --photo" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+
+    <!-- Decorative court lines -->
+    <svg class="hero__court" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="20" y="20" width="560" height="460" stroke="white" stroke-width="1.5"/>
+      <line x1="20" y1="250" x2="580" y2="250" stroke="white" stroke-width="1.5"/>
+      <line x1="300" y1="20" x2="300" y2="480" stroke="white" stroke-width="1.5"/>
+      <rect x="90" y="90" width="420" height="320" stroke="white" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.6"/>
+      <circle cx="300" cy="250" r="48" stroke="white" stroke-width="0.8" opacity="0.5"/>
+      <line x1="20" y1="166" x2="580" y2="166" stroke="white" stroke-width="0.6" opacity="0.4"/>
+      <line x1="20" y1="334" x2="580" y2="334" stroke="white" stroke-width="0.6" opacity="0.4"/>
+    </svg>
+
+    <div class="hero__content">
+      <div class="hero__eyebrow">Setagaya — Tokyo — Japan</div>
+
+      <h1 class="hero__headline">
+        <span class="lang-jp">都市に、新しい<br>スポーツ文化を。</span>
+        <span class="lang-en">A New Sports Culture<br>for the City.</span>
+      </h1>
+
+      <p class="hero__sub">A New Urban Sports Culture.</p>
+
+      <div class="hero__ctas">
+        <a href="#beginners" class="btn-primary" data-jp="初めての方へ →" data-en="For Beginners →">初めての方へ →</a>
+        <a href="#events" class="btn-ghost">Events</a>
+        <a href="#community" class="btn-ghost">Community</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+      <span class="hero__scroll-label">Scroll</span>
+    </div>
+  </section>
+
+
+  <!-- ==================== STATS ==================== -->
+  <div class="stats" aria-label="連盟概要">
+    <div class="stats__inner">
+      <div class="stat reveal">
+        <div class="stat__num">900<span style="font-size:0.55em; font-weight:400; color:rgba(217,255,63,0.5)">+</span></div>
+        <div class="stat__label">メンバー</div>
+        <div class="stat__label-en">Members</div>
+      </div>
+      <div class="stat reveal d1">
+        <div class="stat__num" style="font-size: clamp(16px, 2vw, 26px); padding-top: 4px;" data-jp="世田谷区内 他" data-en="Setagaya &amp; Beyond">世田谷区内 他</div>
+        <div class="stat__label">練習会場</div>
+        <div class="stat__label-en">Venues</div>
+      </div>
+      <div class="stat reveal d2">
+        <div class="stat__num">2024</div>
+        <div class="stat__label">創立</div>
+        <div class="stat__label-en">Founded</div>
+      </div>
+      <div class="stat reveal d3">
+        <div class="stat__num" style="font-size: clamp(16px, 2vw, 26px); padding-top: 4px;" data-jp="週数回不定期" data-en="Weekly">週数回不定期</div>
+        <div class="stat__label">練習開催</div>
+        <div class="stat__label-en">Sessions / Week</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== WHAT IS PICKLEBALL ==================== -->
+  <section class="section" id="about" aria-labelledby="about-heading">
+    <div class="section__inner">
+      <div class="section-label reveal">What is Pickleball</div>
+
+      <div class="display-text reveal" id="about-heading">
+        EASY<br>
+        TO START<span class="display-text__accent">.</span><br>
+        HARD<br>
+        TO STOP<span class="display-text__accent">.</span>
+      </div>
+
+      <div class="features" role="list">
+        <div class="feature reveal" role="listitem">
+          <span class="feature__icon" aria-hidden="true">◯</span>
+          <div class="feature__en">Beginner<br>Friendly</div>
+          <div class="feature__jp">誰でもすぐ始められる</div>
+          <p class="feature__desc" data-jp="ルールはシンプル。初日からラリーが続く。ピックルボール未経験者でも、その日のうちに楽しめる。" data-en="The rules are simple. Rallies start on day one. Even total beginners can enjoy it right away.">ルールはシンプル。初日からラリーが続く。ピックルボール未経験者でも、その日のうちに楽しめる。</p>
+        </div>
+        <div class="feature reveal d1" role="listitem">
+          <span class="feature__icon" aria-hidden="true">∞</span>
+          <div class="feature__en">All Ages<br>Welcome</div>
+          <div class="feature__jp">年齢・体力を問わない</div>
+          <p class="feature__desc" data-jp="10代から80代まで、同じコートで対等に戦える。これがピックルボール最大の魅力だ。" data-en="From teens to seniors, everyone enjoys the same court equally. That's pickleball's greatest appeal.">10代から80代まで、同じコートで対等に戦える。これがピックルボール最大の魅力だ。</p>
+        </div>
+        <div class="feature reveal d2" role="listitem">
+          <span class="feature__icon" aria-hidden="true">⊕</span>
+          <div class="feature__en">Global<br>Sport</div>
+          <div class="feature__jp">世界最速で成長中</div>
+          <p class="feature__desc" data-jp="米国では4,500万人以上がプレー。今、日本でもこの波が来ている。世田谷から始めよう。" data-en="Over 45 million play in the US. The wave is now hitting Japan. Let it start in Setagaya.">米国では4,500万人以上がプレー。今、日本でもこの波が来ている。世田谷から始めよう。</p>
+        </div>
+        <div class="feature reveal d3" role="listitem">
+          <span class="feature__icon" aria-hidden="true">⬡</span>
+          <div class="feature__en">Community<br>Driven</div>
+          <div class="feature__jp">つながりを生むスポーツ</div>
+          <p class="feature__desc" data-jp="試合が終わった後も、人が残る。スポーツを超えたコミュニティが世田谷に育っている。" data-en="The games may end, but the connections continue. A community beyond sport is growing in Setagaya.">試合が終わった後も、人が残る。スポーツを超えたコミュニティが世田谷に育っている。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== COMMUNITY ==================== -->
+  <section class="community" id="community" aria-labelledby="community-heading">
+    <div class="community__head">
+      <div class="section-label reveal">Community</div>
+      <h2 class="community__headline reveal" id="community-heading">
+        ONE COURT.<br>
+        <span class="dim">ONE COMMUNITY.</span>
+      </h2>
+      <p class="community__sub reveal" data-jp="世田谷のコートから、新しい出会いが生まれている。" data-en="Bringing people together on Setagaya's courts.">世田谷のコートから、新しい出会いが生まれている。</p>
+    </div>
+
+    <div class="gallery reveal" id="gallery" role="region" aria-label="コミュニティギャラリー">
+      <div class="gallery__item"><img class="gallery__photo" src="community/community_pickleball_8aa948e7.png" alt="多世代のメンバーがコートで笑い合っている" loading="lazy"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="rally/rally_pickleball.png" alt="ラリー中のプレイヤー" loading="lazy"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="community/beginner_class.png" alt="初心者クラスの様子" loading="lazy"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="gallery/picklwball paddles.jpg" alt="ピックルボールのパドルとボール" loading="lazy"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="community/community_pickleball_8aa948e7.png" alt="ピックルボールコミュニティ" loading="lazy" style="object-position: 60% center;"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="hero/action_pickleball_d58c1ea4.png" alt="パドルとボールのアクションショット" loading="lazy" style="object-position: center 30%;"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="community/beginner_class.png" alt="初心者体験会" loading="lazy" style="object-position: right center;"></div>
+      <div class="gallery__item"><img class="gallery__photo" src="rally/rally_pickleball.png" alt="ラリー" loading="lazy" style="object-position: center 40%;"></div>
+    </div>
+  </section>
+
+
+  <!-- ==================== EVENTS ==================== -->
+  <section class="events" id="events" aria-labelledby="events-heading">
+    <div class="events__inner">
+      <div class="events__head">
+        <h2 class="events__title reveal" id="events-heading">
+          <span class="events__title-sub" data-jp="例) 2026年5月" data-en="e.g. May 2026">例) 2026年5月</span>
+          EVENTS
+        </h2>
+        <a href="#" class="events__all reveal" data-jp="全イベントを見る →" data-en="See All Events →">全イベントを見る →</a>
+      </div>
+
+      <div class="event-list" id="event-list" role="list">
+        <article class="event-row reveal" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">10</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name">All Levels</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d1" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">11</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="中級練習会" data-en="Intermediate Practice">中級練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--blue">Intermediate+</span>
+              <span class="event-row__location" data-jp="池尻２丁目体育館" data-en="Ikejiri 2-chome Gym">池尻２丁目体育館</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d2" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">12</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="上級練習会" data-en="Advanced Practice">上級練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--blue">Advanced</span>
+              <span class="event-row__location" data-jp="下北沢小学校" data-en="Shimokitazawa Elementary">下北沢小学校</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d3" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">13</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="基礎練習ピックル" data-en="Beginner Pickleball">基礎練習ピックル</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">14</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="上級練習会" data-en="Advanced Practice">上級練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--blue">Advanced</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d1" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">15</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="経験者練習会" data-en="Experienced Players">経験者練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d2" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">18</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="初心者大歓迎" data-en="Beginners Welcome">初心者大歓迎</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d3" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">19</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="中級練習会" data-en="Intermediate Practice">中級練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--blue">Intermediate+</span>
+              <span class="event-row__location" data-jp="池尻２丁目体育館" data-en="Ikejiri 2-chome Gym">池尻２丁目体育館</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">22</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="経験者練習会" data-en="Experienced Players">経験者練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d1" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">25</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="初心者大歓迎" data-en="Beginners Welcome">初心者大歓迎</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d2" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">28</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="初中級練習会" data-en="Beg–Intermediate Practice">初中級練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--blue">Intermediate+</span>
+              <span class="event-row__location" data-jp="池尻２丁目体育館" data-en="Ikejiri 2-chome Gym">池尻２丁目体育館</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+        <article class="event-row reveal d3" role="listitem">
+          <div class="event-row__date">
+            <div class="event-row__day">29</div>
+            <div class="event-row__month">May</div>
+          </div>
+          <div class="event-row__body">
+            <div class="event-row__name" data-jp="経験者練習会" data-en="Experienced Players">経験者練習会</div>
+            <div class="event-row__meta">
+              <span class="badge badge--white">All Levels</span>
+              <span class="event-row__location" data-jp="ゆうぽうと世田谷レクセンター" data-en="Yuport Setagaya Rec Center">ゆうぽうと世田谷レクセンター</span>
+            </div>
+          </div>
+          <a href="#" class="event-row__cta">Entry →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== PHILOSOPHY ==================== -->
+  <section class="philosophy" id="philosophy" aria-labelledby="philosophy-heading">
+    <div class="section__inner">
+      <div class="philosophy__inner">
+        <div>
+          <div class="section-label reveal">Our Philosophy</div>
+          <h2 class="philosophy__headline reveal" id="philosophy-heading">
+            We believe<br>
+            sports<br>
+            <em>create cities.</em>
+          </h2>
+        </div>
+        <div class="philosophy__right">
+          <p class="philosophy__body reveal">
+            <span class="lang-jp">ピックルボールは、単なるスポーツではない。<br>
+            それは都市に息吹を与える、<br>
+            新しいコミュニティの形だ。<br><br>
+            世田谷から東京へ、東京から世界へ。<br>
+            スポーツが都市文化を変えていく。</span>
+            <span class="lang-en">Pickleball is more than a sport.<br>
+            It breathes new life into cities —<br>
+            a new form of community.<br><br>
+            From Setagaya to Tokyo, from Tokyo to the world.<br>
+            Sport transforms urban culture.</span>
+          </p>
+          <div class="philosophy__tags reveal">
+            <span class="tag">Wellness</span>
+            <span class="tag">Inclusion</span>
+            <span class="tag">Community</span>
+            <span class="tag">International</span>
+            <span class="tag">Youth Culture</span>
+            <span class="tag">Urban Sport</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== BEGINNERS ==================== -->
+  <section class="beginners" id="beginners" aria-labelledby="beginners-heading">
+    <div class="beginners__inner">
+      <div>
+        <div class="section-label reveal">Start Here</div>
+        <h2 class="beginners__headline reveal" id="beginners-heading">
+          <span class="lang-jp">手ぶらで、<br>今日から。</span>
+          <span class="lang-en">Come as you are.<br>Play, connect, and start today.</span>
+        </h2>
+        <p class="beginners__body reveal">
+          <span class="lang-jp">道具も経験も不要です。<br>最初の一歩を、私たちが一緒に踏み出します。</span>
+          <span class="lang-en">No equipment or experience needed.<br>We'll take your first step together.</span>
+        </p>
+        <a href="#" class="btn-dark reveal" data-jp="参加申し込み →" data-en="Sign Up →">参加申し込み →</a>
+      </div>
+      <div class="beginners__visual reveal">
+        <div class="beginners__visual-bg" aria-hidden="true"></div>
+        <img src="hero/action_pickleball_d58c1ea4.png" alt="ピックルボールのパドルとボール" loading="lazy"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.45;mix-blend-mode:luminosity;">
+        <div class="beginners__visual-content" aria-hidden="true">
+          <div class="beginners__big-text">
+            JOIN<br><span class="a">US</span>
+          </div>
+          <span class="beginners__visual-sub" data-jp="一緒にプレーしよう" data-en="Let's Play Together">一緒にプレーしよう</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== ORGANIZATION ==================== -->
+  <section class="section" id="organization" aria-labelledby="org-heading" style="background: var(--c-subtle);">
+    <div class="section__inner">
+      <div class="section-label reveal">Organization</div>
+      <h2 class="reveal" id="org-heading" style="font-family: var(--f-en); font-size: clamp(22px, 3vw, 32px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: clamp(28px, 4vw, 44px); color: var(--c-primary);" data-jp="組織図" data-en="Organization">
+        組織図
+      </h2>
+      <div class="reveal" style="display: flex; flex-direction: column; gap: 1px; max-width: 360px; background: var(--c-border);">
+        <div style="background: var(--c-bg); padding: 16px 24px; display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--f-jp); font-size: 13px; font-weight: 500; color: var(--c-primary); letter-spacing: 0.03em; white-space: nowrap;" data-jp="池田 陽子" data-en="Yoko Ikeda">池田 陽子</div>
+          <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="代表理事" data-en="Representative Director / Chairperson">代表理事</div>
+          <div style="font-family: var(--f-en); font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #C0C0C0; margin-left: auto;">Chairperson</div>
+        </div>
+        <div style="background: var(--c-bg); padding: 16px 24px; display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--f-jp); font-size: 13px; font-weight: 500; color: var(--c-primary); letter-spacing: 0.03em; white-space: nowrap;" data-jp="林 紘太郎" data-en="Kotaro Hayashi">林 紘太郎</div>
+          <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="理事・競技統括" data-en="Director, Competition">理事・競技統括</div>
+        </div>
+        <div style="background: var(--c-bg); padding: 16px 24px; display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--f-jp); font-size: 13px; font-weight: 500; color: var(--c-primary); letter-spacing: 0.03em; white-space: nowrap;" data-jp="三上 雄右" data-en="Yusuke Mikami">三上 雄右</div>
+          <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="理事・運営統括" data-en="Director, Operations">理事・運営統括</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== PARTNERS ==================== -->
+  <section class="partners" aria-label="パートナー">
+    <div class="partners__label reveal">Partners &amp; Supporters</div>
+    <div class="partners__row">
+      <div class="partner reveal" style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+        <span data-jp="下北沢ピックルボール" data-en="Shimokitazawa Pickleball">下北沢ピックルボール</span>
+        <span style="font-family: var(--f-jp); font-size: 11px; font-weight: 400; color: #D0D0D0; letter-spacing: 0.04em;" data-jp="旧PJF提携クラブ" data-en="Former PJF partner club">旧PJF提携クラブ</span>
+      </div>
+      <div class="partner reveal d1" style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+        <span>ピックルピーク</span>
+        <span style="font-family: var(--f-en); font-size: 11px; font-weight: 400; color: #D0D0D0; letter-spacing: 0.06em;">pickle peak</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer role="contentinfo">
+    <div class="footer__inner">
+
+      <!-- Brand -->
+      <div class="footer__brand">
+        <div class="footer__name">世田谷ピックルボール連盟</div>
+        <div class="footer__jp">Setagaya Pickleball Federation</div>
+      </div>
+
+      <!-- Follow + Contact -->
+      <div class="footer__middle">
+        <div class="footer__follow-block">
+          <div class="footer__follow-label" data-jp="フォローする" data-en="Follow Us">フォローする</div>
+          <div class="footer__socials">
+            <a href="https://www.instagram.com/setagaya_pickleball?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+              </svg>
+              Instagram
+            </a>
+            <a href="https://www.youtube.com/@pickle-peakhayashi" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.6 5 12 5 12 5s-4.6 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.6 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.7 14.5V9.4l5.5 2.6-5.5 2.5z"/>
+              </svg>
+              YouTube
+            </a>
+            <a href="https://note.com/pickle_peak" target="_blank" rel="noopener" aria-label="Note">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h18v2H3v-2zm0 4h12v2H3v-2z"/>
+              </svg>
+              Note
+            </a>
+            <a href="https://line.me/ti/g2/es1k-yhZGqpwgxVV_8784oTb1PSluKL_r3O2UA" target="_blank" rel="noopener" aria-label="LINE オープンチャット">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.02 2 11c0 2.7 1.24 5.12 3.2 6.78-.14.5-.9 3.06-.93 3.22 0 0-.02.16.08.22s.2.03.28-.02c.37-.2 4.7-3.1 5.44-3.6.62.09 1.26.14 1.93.14 5.52 0 10-4.02 10-9 0-4.98-4.48-9-10-9zm-3.5 13H7v-6h1.5v6zm-0.75-7a.875.875 0 110-1.75.875.875 0 010 1.75zM17 15h-1.5l-2.25-3.5V15H11.5V9H13l2.25 3.5V9H17v6z"/>
+              </svg>
+              LINE
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__contact-block">
+          <div class="footer__contact-label" data-jp="お問い合わせ" data-en="Contact">お問い合わせ</div>
+          <a href="mailto:setagaya.pickleball@gmail.com" class="footer__contact-email">
+            setagaya.pickleball@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer__bottom">
+        <div class="footer__copy">© 2026 Setagaya Pickleball Federation. All rights reserved.</div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    /* ----- NAV SCROLL STATE ----- */
+    const nav = document.getElementById('nav');
+    function onScroll() {
+      nav.classList.toggle('--scrolled', window.scrollY > 32);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ----- REVEAL ON SCROLL ----- */
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('--visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+    /* ----- GALLERY DRAG SCROLL ----- */
+    const gallery = document.getElementById('gallery');
+    let isDragging = false, startX = 0, scrollLeft = 0;
+
+    gallery.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      gallery.classList.add('--grabbing');
+      startX = e.pageX - gallery.offsetLeft;
+      scrollLeft = gallery.scrollLeft;
+    });
+
+    ['mouseleave', 'mouseup'].forEach((evt) =>
+      gallery.addEventListener(evt, () => {
+        isDragging = false;
+        gallery.classList.remove('--grabbing');
+      })
+    );
+
+    gallery.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - gallery.offsetLeft;
+      gallery.scrollLeft = scrollLeft - (x - startX) * 1.6;
+    });
+
+    /* Touch support for gallery */
+    let touchStartX = 0, touchScrollLeft = 0;
+    gallery.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = gallery.scrollLeft;
+    }, { passive: true });
+    gallery.addEventListener('touchmove', (e) => {
+      const dx = touchStartX - e.touches[0].pageX;
+      gallery.scrollLeft = touchScrollLeft + dx;
+    }, { passive: true });
+
+    /* ----- LANGUAGE TOGGLE ----- */
+    const btnJp = document.getElementById('btn-jp');
+    const btnEn = document.getElementById('btn-en');
+
+    function setLang(lang) {
+      const isJp = lang === 'jp';
+      btnJp.classList.toggle('--active', isJp);
+      btnEn.classList.toggle('--active', !isJp);
+      btnJp.setAttribute('aria-pressed', isJp);
+      btnEn.setAttribute('aria-pressed', !isJp);
+      document.documentElement.lang = isJp ? 'ja' : 'en';
+
+      // Swap all data-jp / data-en text content
+      document.querySelectorAll('[data-jp]').forEach(el => {
+        el.textContent = isJp ? el.dataset.jp : el.dataset.en;
+      });
+    }
+
+    btnJp.addEventListener('click', () => setLang('jp'));
+    btnEn.addEventListener('click', () => setLang('en'));
+  </script>
+</body>
+</html>
