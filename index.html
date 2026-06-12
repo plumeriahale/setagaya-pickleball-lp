@@ -1134,6 +1134,65 @@
       .footer__middle        { flex-direction: column; gap: 28px; }
       .footer__socials       { flex-wrap: wrap; }
       .community__headline   { font-size: clamp(28px, 7vw, 48px); }
+
+      /* Mobile menu open state */
+      .nav__links.--open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: var(--nav-h) 0 0 0;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        z-index: 199;
+        padding: 40px 32px;
+        list-style: none;
+      }
+
+      .nav__links.--open a {
+        font-size: 18px !important;
+        font-weight: 500 !important;
+        color: rgba(255,255,255,0.85) !important;
+        letter-spacing: 0.08em;
+      }
+
+      .nav__links.--open a:hover {
+        color: white !important;
+      }
+
+      .nav__links.--open .nav__cta {
+        font-size: 15px !important;
+        padding: 12px 36px !important;
+        margin-top: 8px;
+        color: var(--c-primary) !important;
+      }
+
+      .nav__links.--open .nav__lang {
+        background: rgba(255,255,255,0.15);
+        margin-top: 4px;
+      }
+
+      .nav__links.--open .lang-btn {
+        color: rgba(255,255,255,0.6);
+        padding: 6px 14px;
+      }
+
+      .nav__links.--open .lang-btn.--active {
+        background: white;
+        color: var(--c-primary);
+      }
+
+      /* Hamburger → X animation */
+      .nav__hamburger span {
+        transition: transform 0.3s var(--ease-in-out), opacity 0.3s, background 0.3s;
+      }
+
+      .nav__hamburger.--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+      .nav__hamburger.--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav__hamburger.--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
     }
   </style>
 </head>
@@ -1538,7 +1597,7 @@
           <span class="lang-jp">道具も経験も不要です。<br>最初の一歩を、私たちが一緒に踏み出します。</span>
           <span class="lang-en">No equipment or experience needed.<br>We'll take your first step together.</span>
         </p>
-        <a href="#" class="btn-dark reveal" data-jp="参加申し込み →" data-en="Sign Up →">参加申し込み →</a>
+        <a href="https://line.me/ti/g2/es1k-yhZGqpwgxVV_8784oTb1PSluKL_r3O2UA" target="_blank" rel="noopener" class="btn-dark reveal" data-jp="参加申し込み →" data-en="Sign Up →">参加申し込み →</a>
       </div>
       <div class="beginners__visual reveal">
         <div class="beginners__visual-bg" aria-hidden="true"></div>
@@ -1568,176 +1627,4 @@
           <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="代表理事" data-en="Representative Director / Chairperson">代表理事</div>
           <div style="font-family: var(--f-en); font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #C0C0C0; margin-left: auto;">Chairperson</div>
         </div>
-        <div style="background: var(--c-bg); padding: 16px 24px; display: flex; align-items: baseline; gap: 16px;">
-          <div style="font-family: var(--f-jp); font-size: 13px; font-weight: 500; color: var(--c-primary); letter-spacing: 0.03em; white-space: nowrap;" data-jp="林 紘太郎" data-en="Kotaro Hayashi">林 紘太郎</div>
-          <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="理事・競技統括" data-en="Director, Competition">理事・競技統括</div>
-        </div>
-        <div style="background: var(--c-bg); padding: 16px 24px; display: flex; align-items: baseline; gap: 16px;">
-          <div style="font-family: var(--f-jp); font-size: 13px; font-weight: 500; color: var(--c-primary); letter-spacing: 0.03em; white-space: nowrap;" data-jp="三上 雄右" data-en="Yusuke Mikami">三上 雄右</div>
-          <div style="font-family: var(--f-jp); font-size: 10px; font-weight: 400; color: var(--c-muted); letter-spacing: 0.04em;" data-jp="理事・運営統括" data-en="Director, Operations">理事・運営統括</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==================== PARTNERS ==================== -->
-  <section class="partners" aria-label="パートナー">
-    <div class="partners__label reveal">Partners &amp; Supporters</div>
-    <div class="partners__row">
-      <div class="partner reveal" style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-        <span data-jp="下北沢ピックルボール" data-en="Shimokitazawa Pickleball">下北沢ピックルボール</span>
-        <span style="font-family: var(--f-jp); font-size: 11px; font-weight: 400; color: #D0D0D0; letter-spacing: 0.04em;" data-jp="旧PJF提携クラブ" data-en="Former PJF partner club">旧PJF提携クラブ</span>
-      </div>
-      <div class="partner reveal d1" style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-        <span>ピックルピーク</span>
-        <span style="font-family: var(--f-en); font-size: 11px; font-weight: 400; color: #D0D0D0; letter-spacing: 0.06em;">pickle peak</span>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==================== FOOTER ==================== -->
-  <footer role="contentinfo">
-    <div class="footer__inner">
-
-      <!-- Brand -->
-      <div class="footer__brand">
-        <div class="footer__name">世田谷ピックルボール連盟</div>
-        <div class="footer__jp">Setagaya Pickleball Federation</div>
-      </div>
-
-      <!-- Follow + Contact -->
-      <div class="footer__middle">
-        <div class="footer__follow-block">
-          <div class="footer__follow-label" data-jp="フォローする" data-en="Follow Us">フォローする</div>
-          <div class="footer__socials">
-            <a href="https://www.instagram.com/setagaya_pickleball?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-              </svg>
-              Instagram
-            </a>
-            <a href="https://www.youtube.com/@pickle-peakhayashi" target="_blank" rel="noopener" aria-label="YouTube">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.6 5 12 5 12 5s-4.6 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.6 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.7 14.5V9.4l5.5 2.6-5.5 2.5z"/>
-              </svg>
-              YouTube
-            </a>
-            <a href="https://note.com/pickle_peak" target="_blank" rel="noopener" aria-label="Note">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h18v2H3v-2zm0 4h12v2H3v-2z"/>
-              </svg>
-              Note
-            </a>
-            <a href="https://line.me/ti/g2/es1k-yhZGqpwgxVV_8784oTb1PSluKL_r3O2UA" target="_blank" rel="noopener" aria-label="LINE オープンチャット">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2C6.48 2 2 6.02 2 11c0 2.7 1.24 5.12 3.2 6.78-.14.5-.9 3.06-.93 3.22 0 0-.02.16.08.22s.2.03.28-.02c.37-.2 4.7-3.1 5.44-3.6.62.09 1.26.14 1.93.14 5.52 0 10-4.02 10-9 0-4.98-4.48-9-10-9zm-3.5 13H7v-6h1.5v6zm-0.75-7a.875.875 0 110-1.75.875.875 0 010 1.75zM17 15h-1.5l-2.25-3.5V15H11.5V9H13l2.25 3.5V9H17v6z"/>
-              </svg>
-              LINE
-            </a>
-          </div>
-        </div>
-
-        <div class="footer__contact-block">
-          <div class="footer__contact-label" data-jp="お問い合わせ" data-en="Contact">お問い合わせ</div>
-          <a href="mailto:setagaya.pickleball@gmail.com" class="footer__contact-email">
-            setagaya.pickleball@gmail.com
-          </a>
-        </div>
-      </div>
-
-      <!-- Bottom bar -->
-      <div class="footer__bottom">
-        <div class="footer__copy">© 2026 Setagaya Pickleball Federation. All rights reserved.</div>
-      </div>
-
-    </div>
-  </footer>
-
-
-  <!-- ==================== SCRIPTS ==================== -->
-  <script>
-    /* ----- NAV SCROLL STATE ----- */
-    const nav = document.getElementById('nav');
-    function onScroll() {
-      nav.classList.toggle('--scrolled', window.scrollY > 32);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    /* ----- REVEAL ON SCROLL ----- */
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('--visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
-    );
-    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
-
-    /* ----- GALLERY DRAG SCROLL ----- */
-    const gallery = document.getElementById('gallery');
-    let isDragging = false, startX = 0, scrollLeft = 0;
-
-    gallery.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      gallery.classList.add('--grabbing');
-      startX = e.pageX - gallery.offsetLeft;
-      scrollLeft = gallery.scrollLeft;
-    });
-
-    ['mouseleave', 'mouseup'].forEach((evt) =>
-      gallery.addEventListener(evt, () => {
-        isDragging = false;
-        gallery.classList.remove('--grabbing');
-      })
-    );
-
-    gallery.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - gallery.offsetLeft;
-      gallery.scrollLeft = scrollLeft - (x - startX) * 1.6;
-    });
-
-    /* Touch support for gallery */
-    let touchStartX = 0, touchScrollLeft = 0;
-    gallery.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].pageX;
-      touchScrollLeft = gallery.scrollLeft;
-    }, { passive: true });
-    gallery.addEventListener('touchmove', (e) => {
-      const dx = touchStartX - e.touches[0].pageX;
-      gallery.scrollLeft = touchScrollLeft + dx;
-    }, { passive: true });
-
-    /* ----- LANGUAGE TOGGLE ----- */
-    const btnJp = document.getElementById('btn-jp');
-    const btnEn = document.getElementById('btn-en');
-
-    function setLang(lang) {
-      const isJp = lang === 'jp';
-      btnJp.classList.toggle('--active', isJp);
-      btnEn.classList.toggle('--active', !isJp);
-      btnJp.setAttribute('aria-pressed', isJp);
-      btnEn.setAttribute('aria-pressed', !isJp);
-      document.documentElement.lang = isJp ? 'ja' : 'en';
-
-      // Swap all data-jp / data-en text content
-      document.querySelectorAll('[data-jp]').forEach(el => {
-        el.textContent = isJp ? el.dataset.jp : el.dataset.en;
-      });
-    }
-
-    btnJp.addEventListener('click', () => setLang('jp'));
-    btnEn.addEventListener('click', () => setLang('en'));
-  </script>
-</body>
-</html>
+        <div style="background: var(--c-bg); padding: 
